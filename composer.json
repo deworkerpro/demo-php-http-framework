@@ -14,5 +14,11 @@
             "App\\": "src/App/",
             "Framework\\": "src/Framework/"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\App\\": "tests/App/",
+            "Test\\Framework\\": "tests/Framework/"
+        }
     }
 }
