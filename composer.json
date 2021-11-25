@@ -3,6 +3,9 @@
     "description": "Source code for our workshop",
     "type": "project",
     "license": "BSD-3-Clause",
+    "config": {
+        "sort-packages": true
+    },
     "require": {
         "php": "^8.0"
     }
