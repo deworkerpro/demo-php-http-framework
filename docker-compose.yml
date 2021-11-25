@@ -7,3 +7,11 @@ services:
             - "80:80"
         volumes:
             - ./:/app
+        depends_on:
+            - php-fpm
+
+    php-fpm:
+        build:
+            context: docker/php-fpm
+        volumes:
+            - ./:/app
