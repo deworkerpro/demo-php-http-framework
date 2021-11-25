@@ -23,5 +23,8 @@
             "Test\\App\\": "tests/App/",
             "Test\\Framework\\": "tests/Framework/"
         }
+    },
+    "scripts": {
+        "test": "phpunit --colors=always"
     }
 }
