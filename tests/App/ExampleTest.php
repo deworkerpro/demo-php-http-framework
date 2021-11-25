@@ -7,6 +7,9 @@ namespace Test\App;
 use App\Example;
 use PHPUnit\Framework\TestCase;
 
+/**
+ * @internal
+ */
 final class ExampleTest extends TestCase
 {
     public function testSuccess(): void
