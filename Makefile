@@ -24,5 +24,8 @@ lint:
 cs-fix:
 	docker-compose run --rm php-cli composer php-cs-fixer fix
 
+analyze:
+	docker-compose run --rm php-cli composer psalm -- --no-diff
+
 test:
 	docker-compose run --rm php-cli composer test
