@@ -12,8 +12,8 @@
     "require-dev": {
         "friendsofphp/php-cs-fixer": "^3.8",
         "phpunit/phpunit": "^9.5",
-        "psalm/plugin-phpunit": "^0.16.1",
-        "vimeo/psalm": "^4.23"
+        "psalm/plugin-phpunit": "^0.18.4",
+        "vimeo/psalm": "^5.4"
     },
     "autoload": {
         "files": [
