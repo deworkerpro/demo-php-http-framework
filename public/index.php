@@ -9,5 +9,6 @@ if (!is_string($name)) {
 }
 
 header('Content-Type: text/plain; charset=utf-8');
+header('X-Frame-Options: DENY');
 
 echo 'Hello, ' . $name . '!';
