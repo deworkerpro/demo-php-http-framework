@@ -98,7 +98,7 @@ final class ServerRequest implements ServerRequestInterface
         return $this->parsedBody;
     }
 
-    public function withParsedBody(?array $parsedBody): self
+    public function withParsedBody(?array $parsedBody): ServerRequestInterface
     {
         $clone = clone $this;
         $clone->parsedBody = $parsedBody;

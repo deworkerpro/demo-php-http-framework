@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use App\LangServerRequestAdapter;
 use Framework\Http\Message\Response;
-use Framework\Http\Message\ServerRequest;
+use General\Http\Message\ResponseInterface;
+use General\Http\Message\ServerRequestInterface;
 
 use function DetectLang\detectLang;
 use function Framework\Http\createServerRequestFromGlobals;
@@ -17,7 +17,7 @@ require __DIR__ . '/../vendor/autoload.php';
 
 ### Page
 
-function home(ServerRequest $request): Response
+function home(ServerRequestInterface $request): ResponseInterface
 {
     $name = $request->getQueryParams()['name'] ?? 'Guest';
 
@@ -25,7 +25,7 @@ function home(ServerRequest $request): Response
         return new Response(400);
     }
 
-    $lang = detectLang(new LangServerRequestAdapter($request), 'en');
+    $lang = detectLang($request, 'en');
 
     $response = (new Response())
         ->withHeader('Content-Type', 'text/plain; charset=utf-8');

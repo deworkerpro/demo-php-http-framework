@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace DetectLang;
 
-function detectLang(LangRequest $request, string $default): string
+use General\Http\Message\ServerRequestInterface;
+
+function detectLang(ServerRequestInterface $request, string $default): string
 {
     if (!empty($request->getQueryParams()['lang']) && is_string($request->getQueryParams()['lang'])) {
         return (string)$request->getQueryParams()['lang'];

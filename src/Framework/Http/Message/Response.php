@@ -31,7 +31,7 @@ final class Response implements ResponseInterface
         return $this->statusCode;
     }
 
-    public function withStatusCode(int $code): self
+    public function withStatusCode(int $code): ResponseInterface
     {
         $new = clone $this;
         $new->statusCode = $code;
@@ -51,14 +51,14 @@ final class Response implements ResponseInterface
         return $this->headers[$name] ?? [];
     }
 
-    public function withHeader(string $name, string $value): self
+    public function withHeader(string $name, string $value): ResponseInterface
     {
         $clone = clone $this;
         $clone->headers[$name] = [$value];
         return $clone;
     }
 
-    public function withAddedHeader(string $name, string $value): self
+    public function withAddedHeader(string $name, string $value): ResponseInterface
     {
         $clone = clone $this;
         $clone->headers[$name][] = $value;
@@ -70,7 +70,7 @@ final class Response implements ResponseInterface
         return $this->body;
     }
 
-    public function withBody(StreamInterface $body): self
+    public function withBody(StreamInterface $body): ResponseInterface
     {
         $new = clone $this;
         $new->body = $body;

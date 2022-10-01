@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Test\DetectLang;
 
-use DetectLang\LangRequest;
+use General\Http\Message\ServerRequestInterface;
 use PHPUnit\Framework\TestCase;
 
 use function DetectLang\detectLang;
@@ -16,7 +16,7 @@ final class DetectLangTest extends TestCase
 {
     public function testDefault(): void
     {
-        $request = $this->createMock(LangRequest::class);
+        $request = $this->createMock(ServerRequestInterface::class);
         $request->method('getQueryParams')->willReturn([]);
         $request->method('hasHeader')->with('Accept-Language')->willReturn(false);
         $request->method('getHeaderLine')->with('Accept-Language')->willReturn('');
@@ -29,7 +29,7 @@ final class DetectLangTest extends TestCase
 
     public function testQueryParam(): void
     {
-        $request = $this->createMock(LangRequest::class);
+        $request = $this->createMock(ServerRequestInterface::class);
         $request->method('getQueryParams')->willReturn(['lang' => 'de']);
         $request->method('getCookieParams')->willReturn(['lang' => 'pt']);
         $request->method('hasHeader')->with('Accept-Language')->willReturn(true);
@@ -42,7 +42,7 @@ final class DetectLangTest extends TestCase
 
     public function testCookie(): void
     {
-        $request = $this->createMock(LangRequest::class);
+        $request = $this->createMock(ServerRequestInterface::class);
         $request->method('getQueryParams')->willReturn([]);
         $request->method('getCookieParams')->willReturn(['lang' => 'pt']);
         $request->method('hasHeader')->with('Accept-Language')->willReturn(true);
@@ -55,7 +55,7 @@ final class DetectLangTest extends TestCase
 
     public function testHeader(): void
     {
-        $request = $this->createMock(LangRequest::class);
+        $request = $this->createMock(ServerRequestInterface::class);
         $request->method('getQueryParams')->willReturn([]);
         $request->method('getCookieParams')->willReturn([]);
         $request->method('hasHeader')->with('Accept-Language')->willReturn(true);
