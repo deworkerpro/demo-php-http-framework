@@ -11,20 +11,20 @@ require __DIR__ . '/../vendor/autoload.php';
 
 function detectLang(ServerRequest $request, string $default): string
 {
-    if (!empty($request->queryParams['lang']) && is_string($request->queryParams['lang'])) {
-        return $request->queryParams['lang'];
+    if (!empty($request->getQueryParams()['lang']) && is_string($request->getQueryParams()['lang'])) {
+        return $request->getQueryParams()['lang'];
     }
 
-    if (!empty($request->parsedBody['lang']) && is_string($request->parsedBody['lang'])) {
-        return $request->parsedBody['lang'];
+    if (!empty($request->getParsedBody()['lang']) && is_string($request->getParsedBody()['lang'])) {
+        return $request->getParsedBody()['lang'];
     }
 
-    if (!empty($request->cookieParams['lang'])) {
-        return (string)$request->cookieParams['lang'];
+    if (!empty($request->getCookieParams()['lang'])) {
+        return (string)$request->getCookieParams()['lang'];
     }
 
-    if (!empty($request->headers['Accept-Language'])) {
-        return substr((string)$request->headers['Accept-Language'], 0, 2);
+    if (!empty($request->getHeaders()['Accept-Language'])) {
+        return substr((string)$request->getHeaders()['Accept-Language'], 0, 2);
     }
 
     return $default;
@@ -43,7 +43,7 @@ $request = new ServerRequest(
     parsedBody: $_POST ?: null
 );
 
-$name = $request->queryParams['name'] ?? 'Guest';
+$name = $request->getQueryParams()['name'] ?? 'Guest';
 
 if (!is_string($name)) {
     http_response_code(400);

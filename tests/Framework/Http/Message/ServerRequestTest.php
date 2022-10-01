@@ -25,13 +25,13 @@ final class ServerRequestTest extends TestCase
             parsedBody: $parsedBody = ['title' => 'Title']
         );
 
-        self::assertEquals($serverParams, $request->serverParams);
-        self::assertEquals($uri, $request->uri);
-        self::assertEquals($method, $request->method);
-        self::assertEquals($queryParams, $request->queryParams);
-        self::assertEquals($headers, $request->headers);
-        self::assertEquals($cookieParams, $request->cookieParams);
-        self::assertEquals($body, $request->body);
-        self::assertEquals($parsedBody, $request->parsedBody);
+        self::assertEquals($serverParams, $request->getServerParams());
+        self::assertEquals($uri, $request->getUri());
+        self::assertEquals($method, $request->getMethod());
+        self::assertEquals($queryParams, $request->getQueryParams());
+        self::assertEquals($headers, $request->getHeaders());
+        self::assertEquals($cookieParams, $request->getCookieParams());
+        self::assertEquals($body, $request->getBody());
+        self::assertEquals($parsedBody, $request->getParsedBody());
     }
 }
