@@ -53,7 +53,7 @@ $response = home($request);
 
 ### Postprocessing
 
-$response->setHeader('X-Frame-Options', 'DENY');
+$response = $response->setHeader('X-Frame-Options', 'DENY');
 
 ### Sending
 
