@@ -12,10 +12,12 @@ function emitResponseToSapi(Response $response): void
 
     /**
      * @var string $name
-     * @var string $value
+     * @var string[] $values
      */
-    foreach ($response->getHeaders() as $name => $value) {
-        header($name . ': ' . $value);
+    foreach ($response->getHeaders() as $name => $values) {
+        foreach ($values as $value) {
+            header($name . ': ' . $value, false);
+        }
     }
 
     $body = $response->getBody();
