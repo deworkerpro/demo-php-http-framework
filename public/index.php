@@ -2,7 +2,8 @@
 
 declare(strict_types=1);
 
-use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Response\EmptyResponse;
+use Laminas\Diactoros\Response\TextResponse;
 use Laminas\HttpHandlerRunner\Emitter\SapiStreamEmitter;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -22,17 +23,12 @@ function home(ServerRequestInterface $request): ResponseInterface
     $name = $request->getQueryParams()['name'] ?? 'Guest';
 
     if (!is_string($name)) {
-        return (new Response())->withStatus(400);
+        return new EmptyResponse(400);
     }
 
     $lang = detectLang($request, 'en');
 
-    $response = (new Response())
-        ->withHeader('Content-Type', 'text/plain; charset=utf-8');
-
-    $response->getBody()->write('Hello, ' . $name . '! Your lang is ' . $lang);
-
-    return $response;
+    return new TextResponse('Hello, ' . $name . '! Your lang is ' . $lang);
 }
 
 ### Grabbing
