@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Test\DetectLang;
 
+use Laminas\Diactoros\ServerRequest;
 use PHPUnit\Framework\TestCase;
-use Psr\Http\Message\ServerRequestInterface;
 
 use function DetectLang\detectLang;
 
@@ -16,11 +16,7 @@ final class DetectLangTest extends TestCase
 {
     public function testDefault(): void
     {
-        $request = $this->createMock(ServerRequestInterface::class);
-        $request->method('getQueryParams')->willReturn([]);
-        $request->method('hasHeader')->with('Accept-Language')->willReturn(false);
-        $request->method('getHeaderLine')->with('Accept-Language')->willReturn('');
-        $request->method('getCookieParams')->willReturn([]);
+        $request = new ServerRequest();
 
         $lang = detectLang($request, 'en');
 
@@ -29,11 +25,10 @@ final class DetectLangTest extends TestCase
 
     public function testQueryParam(): void
     {
-        $request = $this->createMock(ServerRequestInterface::class);
-        $request->method('getQueryParams')->willReturn(['lang' => 'de']);
-        $request->method('getCookieParams')->willReturn(['lang' => 'pt']);
-        $request->method('hasHeader')->with('Accept-Language')->willReturn(true);
-        $request->method('getHeaderLine')->with('Accept-Language')->willReturn('ru-ru,ru;q=0.8,en;q=0.4');
+        $request = (new ServerRequest())
+            ->withQueryParams(['lang' => 'de'])
+            ->withCookieParams(['lang' => 'pt'])
+            ->withHeader('Accept-Language', ['ru-ru', 'ru;q=0.8', 'en;q=0.4']);
 
         $lang = detectLang($request, 'en');
 
@@ -42,11 +37,9 @@ final class DetectLangTest extends TestCase
 
     public function testCookie(): void
     {
-        $request = $this->createMock(ServerRequestInterface::class);
-        $request->method('getQueryParams')->willReturn([]);
-        $request->method('getCookieParams')->willReturn(['lang' => 'pt']);
-        $request->method('hasHeader')->with('Accept-Language')->willReturn(true);
-        $request->method('getHeaderLine')->with('Accept-Language')->willReturn('ru-ru,ru;q=0.8,en;q=0.4');
+        $request = (new ServerRequest())
+            ->withCookieParams(['lang' => 'pt'])
+            ->withHeader('Accept-Language', ['ru-ru', 'ru;q=0.8', 'en;q=0.4']);
 
         $lang = detectLang($request, 'en');
 
@@ -55,11 +48,8 @@ final class DetectLangTest extends TestCase
 
     public function testHeader(): void
     {
-        $request = $this->createMock(ServerRequestInterface::class);
-        $request->method('getQueryParams')->willReturn([]);
-        $request->method('getCookieParams')->willReturn([]);
-        $request->method('hasHeader')->with('Accept-Language')->willReturn(true);
-        $request->method('getHeaderLine')->with('Accept-Language')->willReturn('ru-ru,ru;q=0.8,en;q=0.4');
+        $request = (new ServerRequest())
+            ->withHeader('Accept-Language', ['ru-ru', 'ru;q=0.8', 'en;q=0.4']);
 
         $lang = detectLang($request, 'en');
 
