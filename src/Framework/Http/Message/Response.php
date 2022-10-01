@@ -10,10 +10,10 @@ final class Response
     private Stream $body;
     private array $headers;
 
-    public function __construct(int $statusCode, Stream $body, array $headers)
+    public function __construct(int $statusCode = 200, ?Stream $body = null, array $headers = [])
     {
         $this->statusCode = $statusCode;
-        $this->body = $body;
+        $this->body = $body ?? new Stream(fopen('php://memory', 'r+'));
         $this->headers = $headers;
     }
 
