@@ -18,11 +18,4 @@
     <plugins>
         <pluginClass class="Psalm\PhpUnitPlugin\Plugin" />
     </plugins>
-
-    <globals>
-        <var name="_GET" type="array&lt;string, string|array&gt;" />
-        <var name="_POST" type="array&lt;string, string|array&gt;" />
-        <var name="_COOKIE" type="array&lt;string, string&gt;" />
-        <var name="_SERVER" type="array&lt;string, string&gt;" />
-    </globals>
 </psalm>
