@@ -8,4 +8,6 @@ if (!is_string($name)) {
     exit;
 }
 
-echo '<h1>Hello, ' . htmlspecialchars($name) . '!</h1>';
+header('Content-Type: text/plain; charset=utf-8');
+
+echo 'Hello, ' . $name . '!';
