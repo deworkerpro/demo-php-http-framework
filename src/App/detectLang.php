@@ -16,8 +16,8 @@ function detectLang(ServerRequest $request, string $default): string
         return (string)$request->getCookieParams()['lang'];
     }
 
-    if (!empty($request->getHeaders()['Accept-Language'])) {
-        return substr((string)$request->getHeaders()['Accept-Language'], 0, 2);
+    if ($request->hasHeader('Accept-Language')) {
+        return substr($request->getHeaderLine('Accept-Language'), 0, 2);
     }
 
     return $default;

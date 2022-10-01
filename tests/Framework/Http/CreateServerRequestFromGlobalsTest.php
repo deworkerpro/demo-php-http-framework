@@ -37,10 +37,10 @@ final class CreateServerRequestFromGlobalsTest extends TestCase
         self::assertEquals('POST', $request->getMethod());
         self::assertEquals($query, $request->getQueryParams());
         self::assertEquals([
-            'Host' => 'localhost',
-            'Content-Type' => 'text/plain',
-            'Content-Length' => '4',
-            'Accept-Language' => 'en',
+            'Host' => ['localhost'],
+            'Content-Type' => ['text/plain'],
+            'Content-Length' => ['4'],
+            'Accept-Language' => ['en'],
         ], $request->getHeaders());
         self::assertEquals($cookie, $request->getCookieParams());
         self::assertEquals('Body', (string)$request->getBody());

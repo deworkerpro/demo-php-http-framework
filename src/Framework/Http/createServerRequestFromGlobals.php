@@ -24,14 +24,16 @@ function createServerRequestFromGlobals(
     $server ??= $_SERVER;
 
     $headers = [
-        'Content-Type' => $server['CONTENT_TYPE'],
-        'Content-Length' => $server['CONTENT_LENGTH'],
+        'Content-Type' => [$server['CONTENT_TYPE']],
+        'Content-Length' => [$server['CONTENT_LENGTH']],
     ];
 
     foreach ($server as $serverName => $serverValue) {
         if (str_starts_with($serverName, 'HTTP_')) {
             $name = ucwords(strtolower(str_replace('_', '-', substr($serverName, 5))), '-');
-            $headers[$name] = $serverValue;
+            /** @var string[] $values */
+            $values = preg_split('#\s*,\s*#', $serverValue);
+            $headers[$name] = $values;
         }
     }
 

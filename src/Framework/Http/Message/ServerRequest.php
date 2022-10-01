@@ -10,11 +10,17 @@ final class ServerRequest
     private Uri $uri;
     private string $method;
     private array $queryParams;
+    /**
+     * @var array<string, string[]>
+     */
     private array $headers;
     private array $cookieParams;
     private Stream $body;
     private ?array $parsedBody;
 
+    /**
+     * @param array<string, string[]> $headers
+     */
     public function __construct(
         array $serverParams,
         Uri $uri,
@@ -58,6 +64,16 @@ final class ServerRequest
     public function getHeaders(): array
     {
         return $this->headers;
+    }
+
+    public function hasHeader(string $name): bool
+    {
+        return array_key_exists($name, $this->headers);
+    }
+
+    public function getHeaderLine(string $name): string
+    {
+        return implode(', ', $this->headers[$name] ?? []);
     }
 
     public function getCookieParams(): array
