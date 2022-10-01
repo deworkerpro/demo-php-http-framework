@@ -10,24 +10,12 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function App\detectLang;
+use function Framework\Http\Message\textResponse;
 
 http_response_code(500);
 
 /** @psalm-suppress MissingFile */
 require __DIR__ . '/../vendor/autoload.php';
-
-### Helpers
-
-function textResponse(ResponseInterface $response, string $content, int $status = 200): ResponseInterface
-{
-    $response = $response
-        ->withStatus($status)
-        ->withHeader('Content-Type', 'text/plain; charset=utf-8');
-
-    $response->getBody()->write($content);
-
-    return $response;
-}
 
 ### Page
 
