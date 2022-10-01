@@ -17,6 +17,7 @@
     },
     "autoload": {
         "files": [
+            "src/App/detectLang.php",
             "src/Framework/Http/createServerRequestFromGlobals.php"
         ],
         "psr-4": {
