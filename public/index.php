@@ -3,12 +3,12 @@
 declare(strict_types=1);
 
 use Laminas\Diactoros\Response;
+use Laminas\HttpHandlerRunner\Emitter\SapiStreamEmitter;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function DetectLang\detectLang;
 use function Framework\Http\createServerRequestFromGlobals;
-use function Framework\Http\emitResponseToSapi;
 
 http_response_code(500);
 
@@ -56,4 +56,5 @@ $response = $response->withHeader('X-Frame-Options', 'DENY');
 
 ### Sending
 
-emitResponseToSapi($response);
+$emitter = new SapiStreamEmitter();
+$emitter->emit($response);
