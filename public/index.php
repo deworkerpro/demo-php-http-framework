@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Framework\Http\Message\DiactorosResponseFactory;
 use Framework\Http\Message\DiactorosServerRequestFactory;
+use General\Http\Message\ResponseFactoryInterface;
 use Laminas\HttpHandlerRunner\Emitter\SapiStreamEmitter;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -19,9 +20,9 @@ require __DIR__ . '/../vendor/autoload.php';
 
 final class Home
 {
-    private readonly DiactorosResponseFactory $factory;
+    private readonly ResponseFactoryInterface $factory;
 
-    public function __construct(DiactorosResponseFactory $factory)
+    public function __construct(ResponseFactoryInterface $factory)
     {
         $this->factory = $factory;
     }
