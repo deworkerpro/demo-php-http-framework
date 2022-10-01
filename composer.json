@@ -16,6 +16,9 @@
         "vimeo/psalm": "^4.23"
     },
     "autoload": {
+        "files": [
+            "src/App/detectLang.php"
+        ],
         "psr-4": {
             "App\\": "src/App/",
             "Framework\\": "src/Framework/"

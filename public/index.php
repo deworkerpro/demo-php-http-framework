@@ -2,28 +2,12 @@
 
 declare(strict_types=1);
 
+use function App\detectLang;
+
 http_response_code(500);
 
-function detectLang(string $default): string
-{
-    if (!empty($_GET['lang']) && is_string($_GET['lang'])) {
-        return $_GET['lang'];
-    }
-
-    if (!empty($_POST['lang']) && is_string($_POST['lang'])) {
-        return $_POST['lang'];
-    }
-
-    if (!empty($_COOKIE['lang'])) {
-        return $_COOKIE['lang'];
-    }
-
-    if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-        return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
-    }
-
-    return $default;
-}
+/** @psalm-suppress MissingFile */
+require __DIR__ . '/../vendor/autoload.php';
 
 $name = $_GET['name'] ?? 'Guest';
 
