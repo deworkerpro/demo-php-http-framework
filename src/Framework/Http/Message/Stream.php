@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Framework\Http\Message;
 
-final class Stream
+use General\Http\Message\StreamInterface;
+
+final class Stream implements StreamInterface
 {
     /**
      * @var resource

@@ -10,10 +10,6 @@ function emitResponseToSapi(Response $response): void
 {
     http_response_code($response->getStatusCode());
 
-    /**
-     * @var string $name
-     * @var string[] $values
-     */
     foreach ($response->getHeaders() as $name => $values) {
         foreach ($values as $value) {
             header($name . ': ' . $value, false);

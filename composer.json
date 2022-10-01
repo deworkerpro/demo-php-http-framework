@@ -24,7 +24,8 @@
         "psr-4": {
             "App\\": "src/App/",
             "DetectLang\\": "src/DetectLang/",
-            "Framework\\": "src/Framework/"
+            "Framework\\": "src/Framework/",
+            "General\\": "src/General/"
         }
     },
     "autoload-dev": {

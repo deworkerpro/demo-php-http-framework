@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Framework\Http\Message;
 
-final class Uri
+use General\Http\Message\UriInterface;
+
+final class Uri implements UriInterface
 {
     private string $scheme;
     private string $host;

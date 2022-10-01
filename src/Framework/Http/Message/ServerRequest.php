@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Framework\Http\Message;
 
-final class ServerRequest
+use General\Http\Message\ServerRequestInterface;
+use General\Http\Message\StreamInterface;
+use General\Http\Message\UriInterface;
+
+final class ServerRequest implements ServerRequestInterface
 {
     private array $serverParams;
-    private Uri $uri;
+    private UriInterface $uri;
     private string $method;
     private array $queryParams;
     /**
@@ -15,7 +19,7 @@ final class ServerRequest
      */
     private array $headers;
     private array $cookieParams;
-    private Stream $body;
+    private StreamInterface $body;
     private ?array $parsedBody;
 
     /**
@@ -23,12 +27,12 @@ final class ServerRequest
      */
     public function __construct(
         array $serverParams,
-        Uri $uri,
+        UriInterface $uri,
         string $method,
         array $queryParams,
         array $headers,
         array $cookieParams,
-        Stream $body,
+        StreamInterface $body,
         ?array $parsedBody
     ) {
         $this->serverParams = $serverParams;
@@ -46,7 +50,7 @@ final class ServerRequest
         return $this->serverParams;
     }
 
-    public function getUri(): Uri
+    public function getUri(): UriInterface
     {
         return $this->uri;
     }
@@ -84,7 +88,7 @@ final class ServerRequest
         return $this->cookieParams;
     }
 
-    public function getBody(): Stream
+    public function getBody(): StreamInterface
     {
         return $this->body;
     }
