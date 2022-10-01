@@ -6,13 +6,6 @@ http_response_code(500);
 
 function detectLang(string $default): string
 {
-    /**
-     * @var array<string, array|string> $_GET
-     * @var array<string, array|string> $_POST
-     * @var array<string, string> $_COOKIE
-     * @var array<string, string> $_SERVER
-     */
-
     if (!empty($_GET['lang']) && is_string($_GET['lang'])) {
         return $_GET['lang'];
     }
