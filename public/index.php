@@ -3,12 +3,12 @@
 declare(strict_types=1);
 
 use Framework\Http\Message\DiactorosResponseFactory;
+use Framework\Http\Message\DiactorosServerRequestFactory;
 use Laminas\HttpHandlerRunner\Emitter\SapiStreamEmitter;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function App\detectLang;
-use function Framework\Http\createDiactorosServerRequestFromGlobals;
 
 http_response_code(500);
 
@@ -47,7 +47,7 @@ final class Home
 
 ### Grabbing
 
-$request = createDiactorosServerRequestFromGlobals();
+$request = DiactorosServerRequestFactory::fromGlobals();
 
 ### Preprocessing
 
