@@ -14,27 +14,47 @@ require __DIR__ . '/../vendor/autoload.php';
 
 ### Page
 
-function home(ServerRequest $request): void
+/**
+ * @return array{statusCode: int, body: string, headers: array<string, string>}
+ */
+function home(ServerRequest $request): array
 {
     $name = $request->getQueryParams()['name'] ?? 'Guest';
 
     if (!is_string($name)) {
-        http_response_code(400);
-        return;
+        return [
+            'statusCode' => 400,
+            'body' => '',
+            'headers' => [],
+        ];
     }
 
     $lang = detectLang($request, 'en');
 
-    http_response_code(200);
-    header('Content-Type: text/plain; charset=utf-8');
-    header('X-Frame-Options: DENY');
-    echo 'Hello, ' . $name . '! Your lang is ' . $lang;
+    return [
+        'statusCode' => 200,
+        'body' => 'Hello, ' . $name . '! Your lang is ' . $lang,
+        'headers' => [
+            'Content-Type' => 'text/plain; charset=utf-8',
+            'X-Frame-Options' => 'DENY',
+        ],
+    ];
 }
 
 ### Grabbing
 
 $request = createServerRequestFromGlobals();
 
-### Running & Sending
+### Running
 
-home($request);
+$response = home($request);
+
+### Sending
+
+http_response_code($response['statusCode']);
+
+foreach ($response['headers'] as $name => $value) {
+    header($name . ': ' . $value);
+}
+
+echo $response['body'];
