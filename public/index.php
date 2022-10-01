@@ -17,28 +17,32 @@ require __DIR__ . '/../vendor/autoload.php';
 
 ### Page
 
-/**
- * @return Closure(ServerRequestInterface): ResponseInterface
- */
-function createHome(ResponseInterface $response): Closure
+final class Home
 {
-    return function (ServerRequestInterface $request) use ($response): ResponseInterface
+    private readonly Response $response;
+
+    public function __construct(Response $response)
+    {
+        $this->response = $response;
+    }
+
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         $name = $request->getQueryParams()['name'] ?? 'Guest';
 
         if (!is_string($name)) {
-            return $response->withStatus(400);
+            return $this->response->withStatus(400);
         }
 
         $lang = detectLang($request, 'en');
 
-        $response = $response
+        $response = $this->response
             ->withHeader('Content-Type', 'text/plain; charset=utf-8');
 
         $response->getBody()->write('Hello, ' . $name . '! Your lang is ' . $lang);
 
         return $response;
-    };
+    }
 }
 
 ### Grabbing
@@ -54,7 +58,7 @@ if (str_starts_with($request->getHeaderLine('Content-Type'), 'application/x-www-
 
 ### Running
 
-$home = createHome(new Response());
+$home = new Home(new Response());
 
 $response = $home($request);
 
