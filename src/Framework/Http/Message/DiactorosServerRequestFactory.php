@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Framework\Http\Message;
 
+use General\Http\Message\ServerRequestFactoryInterface;
 use Laminas\Diactoros\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
 
-final class DiactorosServerRequestFactory
+final class DiactorosServerRequestFactory implements ServerRequestFactoryInterface
 {
     /**
      * @param array<string, array|string>|null $query

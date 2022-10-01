@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Framework\Http\Message;
 
+use General\Http\Message\StreamFactoryInterface;
 use Laminas\Diactoros\Stream;
 use Psr\Http\Message\StreamInterface;
 
-final class DiactorosStreamFactory
+final class DiactorosStreamFactory implements StreamFactoryInterface
 {
     public function createStream(string $content = ''): StreamInterface
     {
@@ -19,7 +20,7 @@ final class DiactorosStreamFactory
     }
 
     /**
-     * @param resource|string $resource
+     * @param resource $resource
      */
     public function createStreamFromResource(mixed $resource): StreamInterface
     {
