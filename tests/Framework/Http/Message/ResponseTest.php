@@ -38,8 +38,8 @@ final class ResponseTest extends TestCase
         );
 
         $response = $response
-            ->setHeader('Header-1', 'value-1')
-            ->setHeader('Header-2', 'value-2');
+            ->withHeader('Header-1', 'value-1')
+            ->withHeader('Header-2', 'value-2');
 
         self::assertEquals([
             'Header-1' => 'value-1',

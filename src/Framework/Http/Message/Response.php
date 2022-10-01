@@ -27,10 +27,11 @@ final class Response
         return $this->headers;
     }
 
-    public function setHeader(string $name, string $value): self
+    public function withHeader(string $name, string $value): self
     {
-        $this->headers[$name] = $value;
-        return $this;
+        $clone = clone $this;
+        $clone->headers[$name] = $value;
+        return $clone;
     }
 
     public function getBody(): Stream
