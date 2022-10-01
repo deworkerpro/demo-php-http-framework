@@ -38,6 +38,13 @@ function home(ServerRequest $request): Response
 
 $request = createServerRequestFromGlobals();
 
+### Preprocessing
+
+if (str_starts_with($request->getHeaderLine('Content-Type'), 'application/x-www-form-urlencoded')) {
+    parse_str((string)$request->getBody(), $data);
+    $request = $request->withParsedBody($data);
+}
+
 ### Running
 
 $response = home($request);

@@ -90,4 +90,11 @@ final class ServerRequest
     {
         return $this->parsedBody;
     }
+
+    public function withParsedBody(?array $parsedBody): self
+    {
+        $clone = clone $this;
+        $clone->parsedBody = $parsedBody;
+        return $clone;
+    }
 }
