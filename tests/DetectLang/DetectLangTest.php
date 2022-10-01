@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Test\App;
+namespace Test\DetectLang;
 
 use Framework\Http\Message\ServerRequest;
 use Framework\Http\Message\Stream;
 use Framework\Http\Message\Uri;
 use PHPUnit\Framework\TestCase;
 
-use function App\detectLang;
+use function DetectLang\detectLang;
 
 /**
  * @internal

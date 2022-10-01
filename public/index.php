@@ -5,7 +5,7 @@ declare(strict_types=1);
 use Framework\Http\Message\Response;
 use Framework\Http\Message\ServerRequest;
 
-use function App\detectLang;
+use function DetectLang\detectLang;
 use function Framework\Http\createServerRequestFromGlobals;
 use function Framework\Http\emitResponseToSapi;
 

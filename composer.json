@@ -17,18 +17,20 @@
     },
     "autoload": {
         "files": [
-            "src/App/detectLang.php",
+            "src/DetectLang/detectLang.php",
             "src/Framework/Http/createServerRequestFromGlobals.php",
             "src/Framework/Http/emitResponseToSapi.php"
         ],
         "psr-4": {
             "App\\": "src/App/",
+            "DetectLang\\": "src/DetectLang/",
             "Framework\\": "src/Framework/"
         }
     },
     "autoload-dev": {
         "psr-4": {
             "Test\\App\\": "tests/App/",
+            "Test\\DetectLang\\": "tests/DetectLang/",
             "Test\\Framework\\": "tests/Framework/"
         }
     },

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace DetectLang;
 
 use Framework\Http\Message\ServerRequest;
 
