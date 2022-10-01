@@ -16,6 +16,19 @@ http_response_code(500);
 /** @psalm-suppress MissingFile */
 require __DIR__ . '/../vendor/autoload.php';
 
+### Helpers
+
+function textResponse(ResponseInterface $response, string $content, int $status = 200): ResponseInterface
+{
+    $response = $response
+        ->withStatus($status)
+        ->withHeader('Content-Type', 'text/plain; charset=utf-8');
+
+    $response->getBody()->write($content);
+
+    return $response;
+}
+
 ### Page
 
 final class Home
@@ -37,12 +50,10 @@ final class Home
 
         $lang = detectLang($request, 'en');
 
-        $response = $this->factory->createResponse()
-            ->withHeader('Content-Type', 'text/plain; charset=utf-8');
-
-        $response->getBody()->write('Hello, ' . $name . '! Your lang is ' . $lang);
-
-        return $response;
+        return textResponse(
+            $this->factory->createResponse(),
+            'Hello, ' . $name . '! Your lang is ' . $lang
+        );
     }
 }
 
