@@ -10,7 +10,6 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 use function App\detectLang;
-use function Framework\Http\Message\textResponse;
 
 http_response_code(500);
 
@@ -38,10 +37,12 @@ final class Home
 
         $lang = detectLang($request, 'en');
 
-        return textResponse(
-            $this->factory->createResponse(),
-            'Hello, ' . $name . '! Your lang is ' . $lang
-        );
+        $response = $this->factory->createResponse()
+            ->withHeader('Content-Type', 'text/plain; charset=utf-8');
+
+        $response->getBody()->write('Hello, ' . $name . '! Your lang is ' . $lang);
+
+        return $response;
     }
 }
 
