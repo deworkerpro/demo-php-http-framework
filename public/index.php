@@ -3,8 +3,8 @@
 declare(strict_types=1);
 
 use Framework\Http\Message\Response;
-use General\Http\Message\ResponseInterface;
-use General\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 use function DetectLang\detectLang;
 use function Framework\Http\createServerRequestFromGlobals;

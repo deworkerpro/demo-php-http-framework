@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Framework\Http;
 
-use General\Http\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 
 function emitResponseToSapi(ResponseInterface $response): void
 {

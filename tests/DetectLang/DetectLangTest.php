@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Test\DetectLang;
 
-use General\Http\Message\ServerRequestInterface;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ServerRequestInterface;
 
 use function DetectLang\detectLang;
 

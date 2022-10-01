@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Framework\Http\Message;
 
-use General\Http\Message\ServerRequestInterface;
-use General\Http\Message\StreamInterface;
-use General\Http\Message\UriInterface;
+use LogicException;
+use Psr\Http\Message\MessageInterface;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\StreamInterface;
+use Psr\Http\Message\UriInterface;
 
 final class ServerRequest implements ServerRequestInterface
 {
@@ -20,7 +23,7 @@ final class ServerRequest implements ServerRequestInterface
     private array $headers;
     private array $cookieParams;
     private StreamInterface $body;
-    private ?array $parsedBody;
+    private array|object|null $parsedBody;
 
     /**
      * @param array<string, string[]> $headers
@@ -73,12 +76,12 @@ final class ServerRequest implements ServerRequestInterface
         return $this->headers;
     }
 
-    public function hasHeader(string $name): bool
+    public function hasHeader($name): bool
     {
         return array_key_exists($name, $this->headers);
     }
 
-    public function getHeaderLine(string $name): string
+    public function getHeaderLine($name): string
     {
         return implode(', ', $this->headers[$name] ?? []);
     }
@@ -93,15 +96,110 @@ final class ServerRequest implements ServerRequestInterface
         return $this->body;
     }
 
-    public function getParsedBody(): ?array
+    public function getParsedBody(): array|object|null
     {
         return $this->parsedBody;
     }
 
-    public function withParsedBody(?array $parsedBody): ServerRequestInterface
+    public function withParsedBody($data): ServerRequestInterface
     {
         $clone = clone $this;
-        $clone->parsedBody = $parsedBody;
+        $clone->parsedBody = $data;
         return $clone;
+    }
+
+    public function getProtocolVersion(): string
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withProtocolVersion($version): ServerRequestInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function getHeader($name): array
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withHeader($name, $value): ServerRequestInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withAddedHeader($name, $value): ServerRequestInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withoutHeader($name): ServerRequestInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withBody(StreamInterface $body): ServerRequestInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function getRequestTarget(): string
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withRequestTarget($requestTarget): ServerRequestInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withMethod($method): ServerRequestInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withUri(UriInterface $uri, $preserveHost = false): ServerRequestInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withCookieParams(array $cookies): ServerRequestInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withQueryParams(array $query): ServerRequestInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function getUploadedFiles(): array
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withUploadedFiles(array $uploadedFiles): ServerRequestInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function getAttributes(): array
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function getAttribute($name, $default = null): mixed
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withAttribute($name, $value): ServerRequestInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withoutAttribute($name): ServerRequestInterface
+    {
+        throw new LogicException('Not implemented.');
     }
 }

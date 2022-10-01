@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Framework\Http\Message;
 
-use General\Http\Message\ResponseInterface;
-use General\Http\Message\StreamInterface;
+use LogicException;
+use Psr\Http\Message\MessageInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 final class Response implements ResponseInterface
 {
@@ -31,13 +33,6 @@ final class Response implements ResponseInterface
         return $this->statusCode;
     }
 
-    public function withStatusCode(int $code): ResponseInterface
-    {
-        $new = clone $this;
-        $new->statusCode = $code;
-        return $new;
-    }
-
     /**
      * @return array<string, string[]>
      */
@@ -46,22 +41,22 @@ final class Response implements ResponseInterface
         return $this->headers;
     }
 
-    public function getHeader(string $name): array
+    public function getHeader($name): array
     {
         return $this->headers[$name] ?? [];
     }
 
-    public function withHeader(string $name, string $value): ResponseInterface
+    public function withHeader($name, $value): ResponseInterface
     {
         $clone = clone $this;
-        $clone->headers[$name] = [$value];
+        $clone->headers[$name] = (array)$value;
         return $clone;
     }
 
-    public function withAddedHeader(string $name, string $value): ResponseInterface
+    public function withAddedHeader($name, $value): ResponseInterface
     {
         $clone = clone $this;
-        $clone->headers[$name][] = $value;
+        $clone->headers[$name] = array_merge_recursive($clone->headers[$name], (array)$value);
         return $clone;
     }
 
@@ -72,8 +67,43 @@ final class Response implements ResponseInterface
 
     public function withBody(StreamInterface $body): ResponseInterface
     {
-        $new = clone $this;
-        $new->body = $body;
-        return $new;
+        $clone = clone $this;
+        $clone->body = $body;
+        return $clone;
+    }
+
+    public function getProtocolVersion(): string
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withProtocolVersion($version): ResponseInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function hasHeader($name): void
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function getHeaderLine($name): string
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withoutHeader($name): ResponseInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withStatus($code, $reasonPhrase = ''): ResponseInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function getReasonPhrase(): string
+    {
+        throw new LogicException('Not implemented.');
     }
 }

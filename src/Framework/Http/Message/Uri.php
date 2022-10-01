@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Framework\Http\Message;
 
-use General\Http\Message\UriInterface;
+use LogicException;
+use Psr\Http\Message\UriInterface;
 
 final class Uri implements UriInterface
 {
@@ -76,5 +77,45 @@ final class Uri implements UriInterface
             . $this->path
             . ($this->query ? '?' . $this->query : '')
             . ($this->fragment ? '#' . $this->fragment : '');
+    }
+
+    public function getAuthority(): string
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withScheme($scheme): UriInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withUserInfo($user, $password = null): UriInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withHost($host): UriInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withPort($port): UriInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withPath($path): UriInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withQuery($query): UriInterface
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function withFragment($fragment): UriInterface
+    {
+        throw new LogicException('Not implemented.');
     }
 }

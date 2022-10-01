@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Framework\Http\Message;
 
-use General\Http\Message\StreamInterface;
+use LogicException;
+use Psr\Http\Message\StreamInterface;
 
 final class Stream implements StreamInterface
 {
@@ -21,9 +22,9 @@ final class Stream implements StreamInterface
         $this->resource = $resource;
     }
 
-    public function seek(int $offset): void
+    public function seek($offset, $whence = SEEK_SET): void
     {
-        fseek($this->resource, $offset);
+        fseek($this->resource, $offset, $whence);
     }
 
     public function rewind(): void
@@ -31,14 +32,14 @@ final class Stream implements StreamInterface
         $this->seek(0);
     }
 
-    public function read(int $length): string
+    public function read($length): string
     {
         return fread($this->resource, $length);
     }
 
-    public function write(string $data): void
+    public function write($string): void
     {
-        fwrite($this->resource, $data);
+        fwrite($this->resource, $string);
     }
 
     public function getContents(): string
@@ -50,5 +51,50 @@ final class Stream implements StreamInterface
     {
         $this->rewind();
         return $this->getContents();
+    }
+
+    public function close(): void
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function detach(): void
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function getSize(): ?int
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function tell(): int
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function eof(): bool
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function isSeekable(): bool
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function isWritable(): bool
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function isReadable(): bool
+    {
+        throw new LogicException('Not implemented.');
+    }
+
+    public function getMetadata($key = null): mixed
+    {
+        throw new LogicException('Not implemented.');
     }
 }

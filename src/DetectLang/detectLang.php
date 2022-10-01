@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DetectLang;
 
-use General\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ServerRequestInterface;
 
 function detectLang(ServerRequestInterface $request, string $default): string
 {
