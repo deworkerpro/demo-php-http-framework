@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Framework\Http\Message\Response;
 use Framework\Http\Message\ServerRequest;
+use Framework\Http\Message\Stream;
 
 use function App\detectLang;
 use function Framework\Http\createServerRequestFromGlobals;
@@ -21,14 +22,21 @@ function home(ServerRequest $request): Response
     $name = $request->getQueryParams()['name'] ?? 'Guest';
 
     if (!is_string($name)) {
-        return new Response(400, '', []);
+        return new Response(
+            400,
+            new Stream(fopen('php://memory', 'r+')),
+            []
+        );
     }
 
     $lang = detectLang($request, 'en');
 
+    $body = new Stream(fopen('php://memory', 'r+'));
+    $body->write('Hello, ' . $name . '! Your lang is ' . $lang);
+
     return new Response(
         200,
-        'Hello, ' . $name . '! Your lang is ' . $lang,
+        $body,
         [
             'Content-Type' => 'text/plain; charset=utf-8',
             'X-Frame-Options' => 'DENY',

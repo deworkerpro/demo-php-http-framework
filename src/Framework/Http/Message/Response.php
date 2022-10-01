@@ -7,10 +7,10 @@ namespace Framework\Http\Message;
 final class Response
 {
     private int $statusCode;
-    private string $body;
+    private Stream $body;
     private array $headers;
 
-    public function __construct(int $statusCode, string $body, array $headers)
+    public function __construct(int $statusCode, Stream $body, array $headers)
     {
         $this->statusCode = $statusCode;
         $this->body = $body;
@@ -27,7 +27,7 @@ final class Response
         return $this->headers;
     }
 
-    public function getBody(): string
+    public function getBody(): Stream
     {
         return $this->body;
     }

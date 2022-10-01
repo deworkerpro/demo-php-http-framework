@@ -34,6 +34,11 @@ final class Stream
         return fread($this->resource, $length);
     }
 
+    public function write(string $data): void
+    {
+        fwrite($this->resource, $data);
+    }
+
     public function getContents(): string
     {
         return stream_get_contents($this->resource);
