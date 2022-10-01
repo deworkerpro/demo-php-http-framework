@@ -12,6 +12,8 @@ http_response_code(500);
 /** @psalm-suppress MissingFile */
 require __DIR__ . '/../vendor/autoload.php';
 
+### Page
+
 function home(ServerRequest $request): void
 {
     $name = $request->getQueryParams()['name'] ?? 'Guest';
@@ -29,6 +31,10 @@ function home(ServerRequest $request): void
     echo 'Hello, ' . $name . '! Your lang is ' . $lang;
 }
 
+### Grabbing
+
 $request = createServerRequestFromGlobals();
+
+### Running & Sending
 
 home($request);
