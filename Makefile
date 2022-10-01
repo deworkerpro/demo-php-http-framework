@@ -19,6 +19,9 @@ app-init: composer-install
 composer-install:
 	docker-compose run --rm php-cli composer install
 
+composer-update:
+	docker-compose run --rm php-cli composer update
+
 lint:
 	docker-compose run --rm php-cli composer php-cs-fixer fix -- --dry-run --diff
 
