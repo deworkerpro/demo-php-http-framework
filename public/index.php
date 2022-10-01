@@ -2,4 +2,4 @@
 
 declare(strict_types=1);
 
-echo 'Hello, World!';
+echo '<h1>Hello, World!</h1>';
