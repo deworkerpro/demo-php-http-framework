@@ -27,6 +27,11 @@ final class Response
         return $this->headers;
     }
 
+    public function setHeader(string $name, string $value): void
+    {
+        $this->headers[$name] = $value;
+    }
+
     public function getBody(): Stream
     {
         return $this->body;

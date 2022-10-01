@@ -39,7 +39,6 @@ function home(ServerRequest $request): Response
         $body,
         [
             'Content-Type' => 'text/plain; charset=utf-8',
-            'X-Frame-Options' => 'DENY',
         ]
     );
 }
@@ -51,6 +50,10 @@ $request = createServerRequestFromGlobals();
 ### Running
 
 $response = home($request);
+
+### Postprocessing
+
+$response->setHeader('X-Frame-Options', 'DENY');
 
 ### Sending
 

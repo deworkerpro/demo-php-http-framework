@@ -28,4 +28,21 @@ final class ResponseTest extends TestCase
         self::assertEquals($status, $response->getStatusCode());
         self::assertEquals($headers, $response->getHeaders());
     }
+
+    public function testHeader(): void
+    {
+        $response = new Response(
+            200,
+            new Stream(fopen('php://memory', 'r+')),
+            []
+        );
+
+        $response->setHeader('Header-1', 'value-1');
+        $response->setHeader('Header-2', 'value-2');
+
+        self::assertEquals([
+            'Header-1' => 'value-1',
+            'Header-2' => 'value-2',
+        ], $response->getHeaders());
+    }
 }
