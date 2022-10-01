@@ -1,0 +1,47 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Test\Framework\Http;
+
+use PHPUnit\Framework\TestCase;
+
+use function Framework\Http\createServerRequestFromGlobals;
+
+/**
+ * @internal
+ */
+final class CreateServerRequestFromGlobalsTest extends TestCase
+{
+    public function testGlobals(): void
+    {
+        $server = [
+            'HTTP_HOST' => 'localhost',
+            'REQUEST_URI' => '/home',
+            'REQUEST_METHOD' => 'POST',
+            'CONTENT_TYPE' => 'text/plain',
+            'CONTENT_LENGTH' => '4',
+            'HTTP_ACCEPT_LANGUAGE' => 'en',
+        ];
+        $query = ['param' => 'value'];
+        $cookie = ['name' => 'John'];
+        $body = ['age' => '42'];
+        $input = 'Body';
+
+        $request = createServerRequestFromGlobals($server, $query, $cookie, $body, $input);
+
+        self::assertEquals($server, $request->getServerParams());
+        self::assertEquals('/home', $request->getUri());
+        self::assertEquals('POST', $request->getMethod());
+        self::assertEquals($query, $request->getQueryParams());
+        self::assertEquals([
+            'Host' => 'localhost',
+            'Content-Type' => 'text/plain',
+            'Content-Length' => '4',
+            'Accept-Language' => 'en',
+        ], $request->getHeaders());
+        self::assertEquals($cookie, $request->getCookieParams());
+        self::assertEquals($input, $request->getBody());
+        self::assertEquals($body, $request->getParsedBody());
+    }
+}

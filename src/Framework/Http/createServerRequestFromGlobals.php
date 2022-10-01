@@ -6,14 +6,26 @@ namespace Framework\Http;
 
 use Framework\Http\Message\ServerRequest;
 
-function createServerRequestFromGlobals(): ServerRequest
-{
+/**
+ * @param array<string, array|string>|null $query
+ * @param array<string, array|string>|null $body
+ * @param array<string, string>|null $server
+ */
+function createServerRequestFromGlobals(
+    ?array $server = null,
+    ?array $query = null,
+    ?array $cookie = null,
+    ?array $body = null,
+    ?string $input = null
+): ServerRequest {
+    $server ??= $_SERVER;
+
     $headers = [
-        'Content-Type' => $_SERVER['CONTENT_TYPE'],
-        'Content-Length' => $_SERVER['CONTENT_LENGTH'],
+        'Content-Type' => $server['CONTENT_TYPE'],
+        'Content-Length' => $server['CONTENT_LENGTH'],
     ];
 
-    foreach ($_SERVER as $serverName => $serverValue) {
+    foreach ($server as $serverName => $serverValue) {
         if (str_starts_with($serverName, 'HTTP_')) {
             $name = ucwords(strtolower(str_replace('_', '-', substr($serverName, 5))), '-');
             $headers[$name] = $serverValue;
@@ -21,13 +33,13 @@ function createServerRequestFromGlobals(): ServerRequest
     }
 
     return new ServerRequest(
-        serverParams: $_SERVER,
-        uri: $_SERVER['REQUEST_URI'],
-        method: $_SERVER['REQUEST_METHOD'],
-        queryParams: $_GET,
+        serverParams: $server,
+        uri: $server['REQUEST_URI'],
+        method: $server['REQUEST_METHOD'],
+        queryParams: $query ?? $_GET,
         headers: $headers,
-        cookieParams: $_COOKIE,
-        body: file_get_contents('php://input'),
-        parsedBody: $_POST ?: null
+        cookieParams: $cookie ?? $_COOKIE,
+        body: $input ?? file_get_contents('php://input'),
+        parsedBody: $body ?? ($_POST ?: null)
     );
 }
