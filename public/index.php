@@ -2,4 +2,7 @@
 
 declare(strict_types=1);
 
-echo '<h1>Hello, World!</h1>';
+/** @var string $name */
+$name = $_GET['name'] ?? 'Guest';
+
+echo '<h1>Hello, ' . htmlspecialchars($name) . '!</h1>';
