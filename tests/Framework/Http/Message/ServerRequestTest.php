@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Test\Framework\Http\Message;
 
 use Framework\Http\Message\ServerRequest;
+use Framework\Http\Message\Stream;
 use Framework\Http\Message\Uri;
-
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -23,7 +23,7 @@ final class ServerRequestTest extends TestCase
             queryParams: $queryParams = ['name' => 'John'],
             headers: $headers = ['X-Header' => 'Value'],
             cookieParams: $cookieParams = ['Cookie' => 'Val'],
-            body: $body = 'body',
+            body: $body = new Stream(fopen('php://memory', 'r')),
             parsedBody: $parsedBody = ['title' => 'Title']
         );
 

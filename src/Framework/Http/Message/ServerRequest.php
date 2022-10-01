@@ -12,7 +12,7 @@ final class ServerRequest
     private array $queryParams;
     private array $headers;
     private array $cookieParams;
-    private string $body;
+    private Stream $body;
     private ?array $parsedBody;
 
     public function __construct(
@@ -22,7 +22,7 @@ final class ServerRequest
         array $queryParams,
         array $headers,
         array $cookieParams,
-        string $body,
+        Stream $body,
         ?array $parsedBody
     ) {
         $this->serverParams = $serverParams;
@@ -65,7 +65,7 @@ final class ServerRequest
         return $this->cookieParams;
     }
 
-    public function getBody(): string
+    public function getBody(): Stream
     {
         return $this->body;
     }
