@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Framework\Http;
 
 use Framework\Http\Message\ServerRequest;
+use Framework\Http\Message\Uri;
 
 /**
  * @param array<string, array|string>|null $query
@@ -34,7 +35,9 @@ function createServerRequestFromGlobals(
 
     return new ServerRequest(
         serverParams: $server,
-        uri: $server['REQUEST_URI'],
+        uri: new Uri(
+            (!empty($server['HTTPS']) ? 'https' : 'http') . '://' . $server['HTTP_HOST'] . $server['REQUEST_URI']
+        ),
         method: $server['REQUEST_METHOD'],
         queryParams: $query ?? $_GET,
         headers: $headers,

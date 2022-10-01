@@ -17,7 +17,7 @@ final class CreateServerRequestFromGlobalsTest extends TestCase
     {
         $server = [
             'HTTP_HOST' => 'localhost',
-            'REQUEST_URI' => '/home',
+            'REQUEST_URI' => '/home?a=2',
             'REQUEST_METHOD' => 'POST',
             'CONTENT_TYPE' => 'text/plain',
             'CONTENT_LENGTH' => '4',
@@ -31,7 +31,7 @@ final class CreateServerRequestFromGlobalsTest extends TestCase
         $request = createServerRequestFromGlobals($server, $query, $cookie, $body, $input);
 
         self::assertEquals($server, $request->getServerParams());
-        self::assertEquals('/home', $request->getUri());
+        self::assertEquals('http://localhost/home?a=2', (string)$request->getUri());
         self::assertEquals('POST', $request->getMethod());
         self::assertEquals($query, $request->getQueryParams());
         self::assertEquals([
