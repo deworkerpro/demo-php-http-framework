@@ -17,6 +17,8 @@ final class DetectLangTest extends TestCase
     {
         $_GET = [];
         $_POST = [];
+        $_COOKIE = [];
+        $_SERVER = [];
 
         $lang = detectLang('en');
 
@@ -27,6 +29,8 @@ final class DetectLangTest extends TestCase
     {
         $_GET = ['lang' => 'de'];
         $_POST = ['lang' => 'fr'];
+        $_COOKIE = ['lang' => 'pt'];
+        $_SERVER = ['HTTP_ACCEPT_LANGUAGE' => 'ru-ru,ru;q=0.8,en;q=0.4'];
 
         $lang = detectLang('en');
 
@@ -37,9 +41,35 @@ final class DetectLangTest extends TestCase
     {
         $_GET = [];
         $_POST = ['lang' => 'fr'];
+        $_COOKIE = ['lang' => 'pt'];
+        $_SERVER = ['HTTP_ACCEPT_LANGUAGE' => 'ru-ru,ru;q=0.8,en;q=0.4'];
 
         $lang = detectLang('en');
 
         self::assertEquals('fr', $lang);
+    }
+
+    public function testCookie(): void
+    {
+        $_GET = [];
+        $_POST = [];
+        $_COOKIE = ['lang' => 'pt'];
+        $_SERVER = ['HTTP_ACCEPT_LANGUAGE' => 'ru-ru,ru;q=0.8,en;q=0.4'];
+
+        $lang = detectLang('en');
+
+        self::assertEquals('pt', $lang);
+    }
+
+    public function testHeader(): void
+    {
+        $_GET = [];
+        $_POST = [];
+        $_COOKIE = [];
+        $_SERVER = ['HTTP_ACCEPT_LANGUAGE' => 'ru-ru,ru;q=0.8,en-us;q=0.6,en;q=0.4'];
+
+        $lang = detectLang('en');
+
+        self::assertEquals('ru', $lang);
     }
 }
