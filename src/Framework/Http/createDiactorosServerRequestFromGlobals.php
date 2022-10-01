@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Framework\Http;
 
+use Framework\Http\Message\DiactorosStreamFactory;
+use Framework\Http\Message\DiactorosUriFactory;
 use Laminas\Diactoros\ServerRequest;
 use Laminas\Diactoros\Stream;
 use Laminas\Diactoros\Uri;
@@ -14,7 +16,7 @@ use Laminas\Diactoros\Uri;
  * @param array<string, string>|null $server
  * @param resource|null $input
  */
-function createServerRequestFromGlobals(
+function createDiactorosServerRequestFromGlobals(
     ?array $server = null,
     ?array $query = null,
     ?array $cookie = null,
@@ -39,11 +41,11 @@ function createServerRequestFromGlobals(
 
     return new ServerRequest(
         serverParams: $server,
-        uri: new Uri(
+        uri: (new DiactorosUriFactory())->createUri(
             (!empty($server['HTTPS']) ? 'https' : 'http') . '://' . $server['HTTP_HOST'] . $server['REQUEST_URI']
         ),
         method: $server['REQUEST_METHOD'],
-        body: new Stream($input ?: fopen('php://input', 'r')),
+        body: (new DiactorosStreamFactory())->createStreamFromResource($input ?: fopen('php://input', 'r')),
         headers: $headers,
         cookieParams: $cookie ?? $_COOKIE,
         queryParams: $query ?? $_GET,

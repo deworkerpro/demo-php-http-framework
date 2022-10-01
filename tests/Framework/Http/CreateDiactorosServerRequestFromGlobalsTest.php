@@ -6,12 +6,12 @@ namespace Test\Framework\Http;
 
 use PHPUnit\Framework\TestCase;
 
-use function Framework\Http\createServerRequestFromGlobals;
+use function Framework\Http\createDiactorosServerRequestFromGlobals;
 
 /**
  * @internal
  */
-final class CreateServerRequestFromGlobalsTest extends TestCase
+final class CreateDiactorosServerRequestFromGlobalsTest extends TestCase
 {
     public function testGlobals(): void
     {
@@ -30,7 +30,7 @@ final class CreateServerRequestFromGlobalsTest extends TestCase
         $input = fopen('php://memory', 'r+');
         fwrite($input, 'Body');
 
-        $request = createServerRequestFromGlobals($server, $query, $cookie, $body, $input);
+        $request = createDiactorosServerRequestFromGlobals($server, $query, $cookie, $body, $input);
 
         self::assertEquals($server, $request->getServerParams());
         self::assertEquals('http://localhost/home?a=2', (string)$request->getUri());
