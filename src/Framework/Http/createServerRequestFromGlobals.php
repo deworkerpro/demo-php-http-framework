@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Framework\Http;
 
-use Framework\Http\Message\ServerRequest;
-use Framework\Http\Message\Stream;
-use Framework\Http\Message\Uri;
+use Laminas\Diactoros\ServerRequest;
+use Laminas\Diactoros\Stream;
+use Laminas\Diactoros\Uri;
 
 /**
  * @param array<string, array|string>|null $query
@@ -43,10 +43,10 @@ function createServerRequestFromGlobals(
             (!empty($server['HTTPS']) ? 'https' : 'http') . '://' . $server['HTTP_HOST'] . $server['REQUEST_URI']
         ),
         method: $server['REQUEST_METHOD'],
-        queryParams: $query ?? $_GET,
+        body: new Stream($input ?: fopen('php://input', 'r')),
         headers: $headers,
         cookieParams: $cookie ?? $_COOKIE,
-        body: new Stream($input ?: fopen('php://input', 'r')),
+        queryParams: $query ?? $_GET,
         parsedBody: $body ?? ($_POST ?: null)
     );
 }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Framework\Http\Message\Response;
+use Laminas\Diactoros\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -22,7 +22,7 @@ function home(ServerRequestInterface $request): ResponseInterface
     $name = $request->getQueryParams()['name'] ?? 'Guest';
 
     if (!is_string($name)) {
-        return new Response(400);
+        return (new Response())->withStatus(400);
     }
 
     $lang = detectLang($request, 'en');
