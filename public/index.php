@@ -8,6 +8,7 @@ http_response_code(500);
  * @param array{
  *     queryParams: array<string, string|array>,
  *     parsedBody: array<string, string|array>|null,
+ *     headers: array<string, string>,
  *     cookieParams: array<string, string>,
  *     serverParams: array<string, string>
  * } $request
@@ -26,8 +27,8 @@ function detectLang(array $request, string $default): string
         return $request['cookieParams']['lang'];
     }
 
-    if (!empty($request['serverParams']['HTTP_ACCEPT_LANGUAGE'])) {
-        return substr($request['serverParams']['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+    if (!empty($request['headers']['Accept-Language'])) {
+        return substr($request['headers']['Accept-Language'], 0, 2);
     }
 
     return $default;
@@ -35,8 +36,14 @@ function detectLang(array $request, string $default): string
 
 $request = [
     'serverParams' => $_SERVER,
+    'uri' => $_SERVER['REQUEST_URI'],
+    'method' => $_SERVER['REQUEST_METHOD'],
     'queryParams' => $_GET,
+    'headers' => [
+        'Accept-Language' => $_SERVER['HTTP_ACCEPT_LANGUAGE'] ?? '',
+    ],
     'cookieParams' => $_COOKIE,
+    'body' => file_get_contents('php://input'),
     'parsedBody' => $_POST ?: null,
 ];
 
