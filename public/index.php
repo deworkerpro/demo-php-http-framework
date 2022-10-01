@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Framework\Http\Message\Response;
 use Framework\Http\Message\ServerRequest;
 
 use function App\detectLang;
@@ -14,31 +15,24 @@ require __DIR__ . '/../vendor/autoload.php';
 
 ### Page
 
-/**
- * @return array{statusCode: int, body: string, headers: array<string, string>}
- */
-function home(ServerRequest $request): array
+function home(ServerRequest $request): Response
 {
     $name = $request->getQueryParams()['name'] ?? 'Guest';
 
     if (!is_string($name)) {
-        return [
-            'statusCode' => 400,
-            'body' => '',
-            'headers' => [],
-        ];
+        return new Response(400, '', []);
     }
 
     $lang = detectLang($request, 'en');
 
-    return [
-        'statusCode' => 200,
-        'body' => 'Hello, ' . $name . '! Your lang is ' . $lang,
-        'headers' => [
+    return new Response(
+        200,
+        'Hello, ' . $name . '! Your lang is ' . $lang,
+        [
             'Content-Type' => 'text/plain; charset=utf-8',
             'X-Frame-Options' => 'DENY',
-        ],
-    ];
+        ]
+    );
 }
 
 ### Grabbing
@@ -51,10 +45,14 @@ $response = home($request);
 
 ### Sending
 
-http_response_code($response['statusCode']);
+http_response_code($response->getStatusCode());
 
-foreach ($response['headers'] as $name => $value) {
+/**
+ * @var string $name
+ * @var string $value
+ */
+foreach ($response->getHeaders() as $name => $value) {
     header($name . ': ' . $value);
 }
 
-echo $response['body'];
+echo $response->getBody();
