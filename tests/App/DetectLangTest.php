@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Test\DetectLang;
+namespace Test\App;
 
 use Laminas\Diactoros\ServerRequest;
 use PHPUnit\Framework\TestCase;
 
-use function DetectLang\detectLang;
+use function App\detectLang;
 
 /**
  * @internal

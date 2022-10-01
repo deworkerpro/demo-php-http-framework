@@ -8,7 +8,7 @@ use Laminas\HttpHandlerRunner\Emitter\SapiStreamEmitter;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-use function DetectLang\detectLang;
+use function App\detectLang;
 use function Framework\Http\createServerRequestFromGlobals;
 
 http_response_code(500);
