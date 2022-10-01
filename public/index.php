@@ -17,22 +17,28 @@ require __DIR__ . '/../vendor/autoload.php';
 
 ### Page
 
-function home(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+/**
+ * @return Closure(ServerRequestInterface): ResponseInterface
+ */
+function createHome(ResponseInterface $response): Closure
 {
-    $name = $request->getQueryParams()['name'] ?? 'Guest';
+    return function (ServerRequestInterface $request) use ($response): ResponseInterface
+    {
+        $name = $request->getQueryParams()['name'] ?? 'Guest';
 
-    if (!is_string($name)) {
-        return $response->withStatus(400);
-    }
+        if (!is_string($name)) {
+            return $response->withStatus(400);
+        }
 
-    $lang = detectLang($request, 'en');
+        $lang = detectLang($request, 'en');
 
-    $response = $response
-        ->withHeader('Content-Type', 'text/plain; charset=utf-8');
+        $response = $response
+            ->withHeader('Content-Type', 'text/plain; charset=utf-8');
 
-    $response->getBody()->write('Hello, ' . $name . '! Your lang is ' . $lang);
+        $response->getBody()->write('Hello, ' . $name . '! Your lang is ' . $lang);
 
-    return $response;
+        return $response;
+    };
 }
 
 ### Grabbing
@@ -48,7 +54,9 @@ if (str_starts_with($request->getHeaderLine('Content-Type'), 'application/x-www-
 
 ### Running
 
-$response = home($request, new Response());
+$home = createHome(new Response());
+
+$response = $home($request);
 
 ### Postprocessing
 
