@@ -18,7 +18,8 @@
     "autoload": {
         "files": [
             "src/App/detectLang.php",
-            "src/Framework/Http/createServerRequestFromGlobals.php"
+            "src/Framework/Http/createServerRequestFromGlobals.php",
+            "src/Framework/Http/emitResponseToSapi.php"
         ],
         "psr-4": {
             "App\\": "src/App/",
