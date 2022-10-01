@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Framework\Http\Message;
 
-use General\Http\Message\ServerRequestFactoryInterface;
 use Laminas\Diactoros\ServerRequest;
+use Psr\Http\Message\ServerRequestFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 final class DiactorosServerRequestFactory implements ServerRequestFactoryInterface
@@ -53,11 +53,11 @@ final class DiactorosServerRequestFactory implements ServerRequestFactoryInterfa
         );
     }
 
-    public function createServerRequest(string $method, string $uri, array $serverParams = []): ServerRequestInterface
+    public function createServerRequest(string $method, $uri, array $serverParams = []): ServerRequestInterface
     {
         return new ServerRequest(
             serverParams: $serverParams,
-            uri: (new DiactorosUriFactory())->createUri($uri),
+            uri: is_string($uri) ? (new DiactorosUriFactory())->createUri($uri) : $uri,
             method: $method,
             body: (new DiactorosStreamFactory())->createStream(),
             headers: [],
