@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace Test\DetectLang;
 
-use Framework\Http\Message\ServerRequest;
-use Framework\Http\Message\Stream;
-use Framework\Http\Message\Uri;
+use DetectLang\LangRequest;
 use PHPUnit\Framework\TestCase;
 
 use function DetectLang\detectLang;
@@ -18,15 +16,10 @@ final class DetectLangTest extends TestCase
 {
     public function testDefault(): void
     {
-        $request = new ServerRequest(
-            serverParams: [],
-            uri: new Uri('/'),
-            method: 'GET',
+        $request = new LangRequest(
             queryParams: [],
             headers: [],
             cookieParams: [],
-            body: new Stream(fopen('php://memory', 'r')),
-            parsedBody: null
         );
 
         $lang = detectLang($request, 'en');
@@ -36,15 +29,10 @@ final class DetectLangTest extends TestCase
 
     public function testQueryParam(): void
     {
-        $request = new ServerRequest(
-            serverParams: [],
-            uri: new Uri('/'),
-            method: 'GET',
+        $request = new LangRequest(
             queryParams: ['lang' => 'de'],
             headers: ['Accept-Language' => ['ru-ru', 'ru;q=0.8', 'en;q=0.4']],
             cookieParams: ['lang' => 'pt'],
-            body: new Stream(fopen('php://memory', 'r')),
-            parsedBody: null
         );
 
         $lang = detectLang($request, 'en');
@@ -54,15 +42,10 @@ final class DetectLangTest extends TestCase
 
     public function testCookie(): void
     {
-        $request = new ServerRequest(
-            serverParams: [],
-            uri: new Uri('/'),
-            method: 'GET',
+        $request = new LangRequest(
             queryParams: [],
             headers: ['Accept-Language' => ['ru-ru', 'ru;q=0.8', 'en;q=0.4']],
             cookieParams: ['lang' => 'pt'],
-            body: new Stream(fopen('php://memory', 'r')),
-            parsedBody: null
         );
 
         $lang = detectLang($request, 'en');
@@ -72,15 +55,10 @@ final class DetectLangTest extends TestCase
 
     public function testHeader(): void
     {
-        $request = new ServerRequest(
-            serverParams: [],
-            uri: new Uri('/'),
-            method: 'GET',
+        $request = new LangRequest(
             queryParams: [],
             headers: ['Accept-Language' => ['ru-ru', 'ru;q=0.8', 'en;q=0.4']],
             cookieParams: [],
-            body: new Stream(fopen('php://memory', 'r')),
-            parsedBody: null
         );
 
         $lang = detectLang($request, 'en');

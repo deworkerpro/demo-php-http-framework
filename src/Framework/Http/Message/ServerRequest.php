@@ -61,6 +61,9 @@ final class ServerRequest
         return $this->queryParams;
     }
 
+    /**
+     * @return array<string, string[]>
+     */
     public function getHeaders(): array
     {
         return $this->headers;

@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use DetectLang\LangRequest;
 use Framework\Http\Message\Response;
 use Framework\Http\Message\ServerRequest;
 
@@ -24,7 +25,14 @@ function home(ServerRequest $request): Response
         return new Response(400);
     }
 
-    $lang = detectLang($request, 'en');
+    $lang = detectLang(
+        new LangRequest(
+            queryParams: $request->getQueryParams(),
+            headers: $request->getHeaders(),
+            cookieParams: $request->getCookieParams()
+        ),
+        'en'
+    );
 
     $response = (new Response())
         ->withHeader('Content-Type', 'text/plain; charset=utf-8');
