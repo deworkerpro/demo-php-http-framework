@@ -4,22 +4,28 @@ declare(strict_types=1);
 
 http_response_code(500);
 
-function detectLang(string $default): string
+/**
+ * @param array<string, array|string> $query
+ * @param array<string, array|string> $body
+ * @param array<string, string> $cookie
+ * @param array<string, string> $server
+ */
+function detectLang(array $query, array $body, array $cookie, array $server, string $default): string
 {
-    if (!empty($_GET['lang']) && is_string($_GET['lang'])) {
-        return $_GET['lang'];
+    if (!empty($query['lang']) && is_string($query['lang'])) {
+        return $query['lang'];
     }
 
-    if (!empty($_POST['lang']) && is_string($_POST['lang'])) {
-        return $_POST['lang'];
+    if (!empty($body['lang']) && is_string($body['lang'])) {
+        return $body['lang'];
     }
 
-    if (!empty($_COOKIE['lang'])) {
-        return $_COOKIE['lang'];
+    if (!empty($cookie['lang'])) {
+        return $cookie['lang'];
     }
 
-    if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
-        return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+    if (!empty($server['HTTP_ACCEPT_LANGUAGE'])) {
+        return substr($server['HTTP_ACCEPT_LANGUAGE'], 0, 2);
     }
 
     return $default;
@@ -32,7 +38,7 @@ if (!is_string($name)) {
     exit;
 }
 
-$lang = detectLang('en');
+$lang = detectLang($_GET, $_POST, $_COOKIE, $_SERVER, 'en');
 
 http_response_code(200);
 header('Content-Type: text/plain; charset=utf-8');
