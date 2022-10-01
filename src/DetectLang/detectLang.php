@@ -7,7 +7,7 @@ namespace DetectLang;
 function detectLang(LangRequest $request, string $default): string
 {
     if (!empty($request->getQueryParams()['lang']) && is_string($request->getQueryParams()['lang'])) {
-        return $request->getQueryParams()['lang'];
+        return (string)$request->getQueryParams()['lang'];
     }
 
     if (!empty($request->getCookieParams()['lang'])) {
